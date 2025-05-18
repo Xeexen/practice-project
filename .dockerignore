@@ -1,0 +1,15 @@
+vendor/
+node_modules/
+storage/
+tests/
+*.log
+*.zip
+*.tar.gz
+*.rar
+#*.env
+*.sqlite
+.idea/
+.vscode/
+.DS_Store
+.git/
+public/storage
