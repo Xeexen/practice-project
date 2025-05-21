@@ -1,0 +1,27 @@
+name: CI Pipeline
+
+on:
+  push: # Se activará cuando se cierre un pull request (es decir, cuando se haga un merge)
+    branches:
+      - main # O la rama a la que se hace el merge (puede ser `develop` o cualquier rama de tu elección)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.DROPLET_IP }} # Dirección IP de tu Droplet
+          username: root # Usuario de tu Droplet (root o el que hayas configurado)
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # Clave privada SSH desde los secretos
+          port: 22 # Puerto por defecto de SSH
+          script: |
+            cd /var/www/practice-proyect
+            git pull https://${{secrets.TOKEN_GITHUB}}@github.com/${{ secrets.URL_REPOSITORY }}.git
+            composer i
+            php artisan optimize
