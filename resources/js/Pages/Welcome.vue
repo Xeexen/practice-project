@@ -10,7 +10,7 @@
             <section class="space-y-4">
                 <h2 class="text-2xl font-semibold text-indigo-600">1. Description</h2>
                 <p>
-                    This reportasdasdasdasdasdw presents a detailed overview of the services, pricing, setup process, and account limitations of DigitalOcean,
+                    This report presents a detailed overview of the services, pricing, setup process, and account limitations of DigitalOcean,
                     a cloud computing platform designed for developers, startups, and businesses looking to deploy scalable applications easily.
                 </p>
                 <p><strong>Objective:</strong> Provide a technical and financial analysis of DigitalOcean for individuals and small organizations operating with a single account.</p>

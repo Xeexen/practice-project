@@ -1,27 +1,26 @@
 name: CI Pipeline
 
 on:
-  push: # Se activará cuando se cierre un pull request (es decir, cuando se haga un merge)
+  push:
     branches:
-      - main # O la rama a la que se hace el merge (puede ser `develop` o cualquier rama de tu elección)
+      - main
 
 jobs:
-  deploy:
+  deploy-app:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up SSH key
-        uses: appleboy/ssh-action@v1.2.2
+      - name: CI Pipeline
+        uses: digitalocean/app_action/deploy@v2
         with:
-          host: ${{ secrets.DROPLET_IP }}
-          username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
+          deploy_pr_preview: "true"
+          token: ${{ secrets.DO_API_TOKEN }}
+      - uses: actions/github-script@v7
+        with:
           script: |
             cd /var/www/practice-proyect
-            git pull https://${{secrets.TOKEN_GITHUB}}@github.com/${{ secrets.URL_REPOSITORY }}.git
-            composer i
+            git pull https://${{ secrets.TOKEN_GITHUB }}@github.com/${{ secrets.URL_REPOSITORY }}.git
+            composer install
             php artisan optimize
